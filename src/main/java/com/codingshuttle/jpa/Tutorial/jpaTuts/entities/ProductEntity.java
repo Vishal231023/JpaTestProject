@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "product_table",
 uniqueConstraints ={
@@ -24,6 +23,7 @@ uniqueConstraints ={
     indexes = {
         @Index(name ="sku_index",columnList = "sku")
     })
+@Builder
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
