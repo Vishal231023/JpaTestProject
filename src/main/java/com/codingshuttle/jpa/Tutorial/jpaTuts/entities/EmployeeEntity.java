@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-@Data
+import java.util.Objects;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,6 +25,35 @@ public class EmployeeEntity {
     @OneToOne(mappedBy = "manager")
     @JsonIgnore
     private DepartmentEntity managedDepartment;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "worker_dept_id", referencedColumnName = "id")
+    @JsonIgnore
+    private DepartmentEntity workersInDepartment;
+
+    @ManyToMany
+    @JoinTable(name = "freelance_department_mapping",
+            joinColumns = @JoinColumn(name = "employee_id"),
+    inverseJoinColumns =  @JoinColumn(name = "department_id")
+    )
+    @JsonIgnore
+    private Set<DepartmentEntity> freelanceDepartments;
+
+    public Set<DepartmentEntity> getFreelanceDepartments() {
+        return freelanceDepartments;
+    }
+
+    public void setFreelanceDepartments(Set<DepartmentEntity> freelanceDepartments) {
+        this.freelanceDepartments = freelanceDepartments;
+    }
+
+    public DepartmentEntity getWorkersInDepartment() {
+        return workersInDepartment;
+    }
+
+    public void setWorkersInDepartment(DepartmentEntity workersInDepartment) {
+        this.workersInDepartment = workersInDepartment;
+    }
 
     public Long getId() {
         return id;
@@ -46,5 +77,18 @@ public class EmployeeEntity {
 
     public void setManagedDepartment(DepartmentEntity managedDepartment) {
         this.managedDepartment = managedDepartment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeEntity that = (EmployeeEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

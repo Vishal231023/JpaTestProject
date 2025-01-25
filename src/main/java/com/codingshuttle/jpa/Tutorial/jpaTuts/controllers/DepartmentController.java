@@ -17,7 +17,7 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/{departmentId}")
+    @GetMapping(path = "/{departmentId}")
     public DepartmentEntity getDepartmentById(@PathVariable Long departmentId){
         return  departmentService.getDepartmentById(departmentId);
     }
@@ -31,5 +31,20 @@ public class DepartmentController {
     @PutMapping("/{departmentId}/manager/{employeeId}")
     public DepartmentEntity assignManagerToDepartment(@PathVariable Long departmentId, @PathVariable Long employeeId){
         return departmentService.assignManagerToDepartment(departmentId,employeeId);
+    }
+
+    @GetMapping(path = "/assignedDepartmentOfManager/{employeeId}")
+    public DepartmentEntity getAssignedDepartmentOfManager(@PathVariable Long employeeId ){
+        return  departmentService.getAssignedDepartmentOfManager(employeeId);
+    }
+
+    @PutMapping(path = "/{departmentId}/worker/{employeeId}")
+    public DepartmentEntity assignWorkerToDepartment(@PathVariable Long departmentId, @PathVariable Long employeeId){
+        return departmentService.assignWorkerToDepartment(departmentId,employeeId);
+    }
+
+    @PutMapping(path = "/{departmentId}/freelancer/{employeeId}")
+    public DepartmentEntity assignFreelancerToDepartment(@PathVariable Long departmentId, @PathVariable Long employeeId){
+        return departmentService.assignFreelancerToDepartment(departmentId,employeeId);
     }
 }
