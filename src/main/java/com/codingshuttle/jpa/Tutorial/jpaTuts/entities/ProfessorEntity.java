@@ -6,28 +6,36 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Set;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "students")
-public class StudentEntity {
+@Table(name = "professors")
+public class ProfessorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private  Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "student")
+    @OneToMany(mappedBy = "professor")
     @JsonIgnore
-    private AdmissionRecordEntity record;
+    Set<SubjectEntity> subjects;
 
+    public Set<SubjectEntity> getSubjects() {
+        return subjects;
+    }
 
+    public void setSubjects(Set<SubjectEntity> subjects) {
+        this.subjects = subjects;
+    }
 
     public Long getId() {
         return id;
@@ -45,21 +53,12 @@ public class StudentEntity {
         this.name = name;
     }
 
-    public AdmissionRecordEntity getRecord() {
-        return record;
-    }
-
-    public void setRecord(AdmissionRecordEntity record) {
-        this.record = record;
-    }
-
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentEntity that = (StudentEntity) o;
+        ProfessorEntity that = (ProfessorEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 

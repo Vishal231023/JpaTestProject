@@ -11,11 +11,11 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "students")
-public class StudentEntity {
+@Table(name = "subjects")
+public class SubjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,11 +23,9 @@ public class StudentEntity {
     @Column(nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "student")
-    @JsonIgnore
-    private AdmissionRecordEntity record;
-
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "professor_id", referencedColumnName = "id")
+    private ProfessorEntity professor;
 
     public Long getId() {
         return id;
@@ -45,21 +43,19 @@ public class StudentEntity {
         this.name = name;
     }
 
-    public AdmissionRecordEntity getRecord() {
-        return record;
+    public ProfessorEntity getProfessor() {
+        return professor;
     }
 
-    public void setRecord(AdmissionRecordEntity record) {
-        this.record = record;
+    public void setProfessor(ProfessorEntity professor) {
+        this.professor = professor;
     }
-
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentEntity that = (StudentEntity) o;
+        SubjectEntity that = (SubjectEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 

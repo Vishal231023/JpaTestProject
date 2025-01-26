@@ -13,8 +13,8 @@ import java.util.Optional;
 
 public class StudentService {
 
-    private StudentRepository studentRepository;
-    private AdmissionRecordRepository admissionRecordRepository;
+    private final StudentRepository studentRepository;
+    private final AdmissionRecordRepository admissionRecordRepository;
 
     public StudentService(StudentRepository studentRepository, AdmissionRecordRepository admissionRecordRepository) {
         this.studentRepository = studentRepository;
