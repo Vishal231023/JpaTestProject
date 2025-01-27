@@ -33,4 +33,9 @@ public class StudentController {
     public List<StudentEntity> getAllStudents() {
         return studentService.getAllStudents();
     }
+
+    @PutMapping("/{studentId}/assign-professor/{professorId}")
+    public StudentEntity assignProfessorsToStudent(@PathVariable Long studentId, @PathVariable Long professorId ){
+        return studentService.assignProfessorsToStudent(studentId,professorId);
+    }
 }

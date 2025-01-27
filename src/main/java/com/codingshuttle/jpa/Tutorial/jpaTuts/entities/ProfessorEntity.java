@@ -29,6 +29,17 @@ public class ProfessorEntity {
     @JsonIgnore
     Set<SubjectEntity> subjects;
 
+    @ManyToMany(mappedBy = "professorsSet")
+    private Set<StudentEntity> studentSet;
+
+    public Set<StudentEntity> getStudentSet() {
+        return studentSet;
+    }
+
+    public void setStudentSet(Set<StudentEntity> studentSet) {
+        this.studentSet = studentSet;
+    }
+
     public Set<SubjectEntity> getSubjects() {
         return subjects;
     }
@@ -52,6 +63,7 @@ public class ProfessorEntity {
     public void setName(String name) {
         this.name = name;
     }
+
 
 
     @Override

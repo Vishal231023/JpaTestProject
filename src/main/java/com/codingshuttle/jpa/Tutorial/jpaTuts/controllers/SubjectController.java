@@ -38,4 +38,11 @@ public class SubjectController {
     public SubjectEntity assignProfessorToSubject(@PathVariable Long subjectId, @PathVariable Long professorId) {
         return subjectService.assignProfessorToSubject(subjectId, professorId);
     }
+
+    @PutMapping("/{subjectId}/assign-student/{studentId}")
+    public SubjectEntity assignStudentToSubject(@PathVariable Long subjectId, @PathVariable Long studentId ){
+        return subjectService.assignStudentToSubject(subjectId,studentId);
+    }
+
+
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +27,22 @@ public class SubjectEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "professor_id", referencedColumnName = "id")
     private ProfessorEntity professor;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "subject_student_mapping",
+            joinColumns = @JoinColumn(name = "subject_id"),
+            inverseJoinColumns =  @JoinColumn(name = "student_id")
+    )
+    @JsonIgnore
+    private Set<StudentEntity> studentsSet;
+
+    public Set<StudentEntity> getStudentsSet() {
+        return studentsSet;
+    }
+
+    public void setStudentsSet(Set<StudentEntity> studentsSet) {
+        this.studentsSet = studentsSet;
+    }
 
     public Long getId() {
         return id;
